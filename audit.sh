@@ -425,7 +425,6 @@ echo '<br/>'
 echo '<p>All network time servers listed in `/etc/ntp.conf`:<br />'
 echo "$ALL_NTS"
 echo '</p>'
-# Section 2.2.3 Restrict NTP server to loopback interfact remove in 10.13 CIS Benchmark  JAH
 echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
@@ -800,33 +799,6 @@ echo '<code>sudo pmset -a womp 0 ; sudo pmset -c womp 0</code></p>'
 
 echo '</div>'
 # -------------------------------------
-#echo '<div class="item">'
-
-#echo '<span class="tag">Manual</span>'
-#echo '<h2>2.5.2 Disable sleeping the computer when connected to power (Scored)</h2>'
-
-#echo '<p>Note: Device must be plugged in to AC power to receive compliant result.</p>'
-
-#echo '<h4>Expected Result</h4>'
-#echo '<p class="result">0</p>'
-
-#echo '<h4>Actual Result</h4>'
-#RESULT=$(pmset -g | grep ^sleep$)
-#echo "<p class=\"result pre\">$RESULT &nbsp;</p>"
-
-#if [[ "$RESULT" == "0" ]];
-#then
-#    echo '<p class="result compliant">Compliant</p>'
-#else
-#    echo '<p class="result non-compliant">Non-Compliant</p>'
-#    
-#    echo '<h5>Remediation</h5>'
-#    echo '<p>Run the following commands in Terminal:<br />'
-#    echo '<code>sudo pmset -c sleep 0</code></p>'
-#fi
-
-#echo '</div>'
-# -------------------------------------
 echo '<div class="item">'
 
 echo '<h2>2.6.1 Enable FileVault (Scored)</h2>'
@@ -1186,7 +1158,7 @@ echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
 
-echo '<h2>3.2 Enable security auditing (Scored)</h2>'
+echo '<h2>3.1 Enable security auditing (Scored)</h2>'
 
 echo '<h4>Expected Result</h4>'
 echo '<p class="result">com.apple.auditd</p>'
@@ -1210,7 +1182,7 @@ echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
 
-echo '<h2>3.3 Configure Security Auditing Flags (Scored)</h2>'
+echo '<h2>3.2 Configure Security Auditing Flags (Scored)</h2>'
 
 echo '<h4>Expected Result</h4>'
 echo '<p class="result">flags:lo,ad,fd,fm,-all</p>'
@@ -1336,19 +1308,12 @@ else
 fi
 
 echo '</div>'
-# -------------------------------------
-#echo '<div class="item">'
 
-#echo '<h2>4.5 Ensure ftp server is not running (Scored)</h2>'*********FTP server was removed from MacOS 10.13
-
-
-
-#echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
 
 #echo '<span class="tag">Manual</span>'
-echo '<h2>4.6 Ensure nfs server is not running (Scored)</h2>'
+echo '<h2>4.5 Ensure nfs server is not running (Scored)</h2>'
 
 echo '<h4>Expected Result</h4>'
 echo '<p class="result">nfsd service is enabled<br />nfsd is not running</p>'
@@ -1716,7 +1681,7 @@ echo '</div>'
 echo '<div class="item">'
 
 # echo '<span class="tag">Manual</span>'
-echo '<h2>5.4 Automatically lock the login keychain for inactivity (Scored)</h2>'
+echo '<h2>5.7 Automatically lock the login keychain for inactivity (Scored)</h2>'
 
 echo '<h4>Expected Result</h4>'
 echo '<p class="result">21600</p>'
@@ -1822,7 +1787,7 @@ echo '</div>'
 echo '<div class="item">'
 
 #echo '<span class="tag">Manual</span>'
-echo '<h2>5.8 Disable automatic login (Scored)</h2>'
+echo '<h2>5.12 Disable automatic login (Scored)</h2>'
 
 echo '<h4>Expected Result</h4>'
 echo '<p class="result">&nbsp;</p>'
@@ -1948,7 +1913,7 @@ echo '</div>'
 echo '<div class="item">'
 
 echo '<span class="tag">Manual</span>'
-echo '<h2>5.13 Create a Login window banner (Scored)</h2>'
+echo '<h2>5.18 Create a Login window banner (Scored)</h2>'
 
 echo '<h4>Expected Result</h4>'
 echo '<p class="result">{\rtf1\ansi\ansicpg1252\cocoartf1344\cocoasubrtf720 {\fonttbl\f0\fswiss\fcharset0 Helvetica;} {\colortbl;\red255\green255\blue255;\red217\green11\blue0;} \margl1440\margr1440\vieww10800\viewh8400\viewkind0 \deftab720 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720 \f0\fs24 \cf0 \expnd0\expndtw0\kerning0 This is a Federal computer system and is property of the United States Government. It is for authorized use only. Users (authorized or unauthorized) have no explicit or implicit expectation of privacy.\uc0\u8232 \u8232 Any or all uses of this system and all files on this system may be intercepted, monitored, recorded, copied, audited, inspected, and disclosed to authorized site, Department of Energy, and law enforcement personnel, as well as authorized officials of other agencies, both domestic and foreign. By using this system, the user consents to such interception, monitoring, recording, copying, auditing, inspection, and disclosure at the discretion of authorized site or Department of Energy personnel.\u8232 \u8232 Unauthorized use of this system may result in administrative disciplinary action and civil and criminal penalties. By continuing to use this system you indicate your awareness of and consent to these terms and conditions of use. \b \cf2 LOG OFF IMMEDIATELY \b0 \cf0 if you do not agree to the conditions stated in this warning.} </p>'
@@ -1965,7 +1930,7 @@ echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
 echo '<span class="tag">Manual</span>'
-echo '<h2>5.14 Do not enter a password-related hint (Not Scored)</h2>'
+echo '<h2>5.19 Do not enter a password-related hint (Not Scored)</h2>'
 
 echo "<p>A manual check of each account's login information is required to confirm compliance to this criteria. Ensure that no account has a password hint.</p>"
 
@@ -1984,7 +1949,7 @@ echo '</div>'
 echo '<div class="item">'
 
 #echo '<span class="tag">Manual</span>'
-echo '<h2>5.18 System Integrity Protection status (Scored)</h2>'
+echo '<h2>5.23 System Integrity Protection status (Scored)</h2>'
 
 echo '<h4>Expected Result</h4>'
 echo '<p class="result">enabled</p>'
