@@ -1715,7 +1715,7 @@ echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
 #echo '<span class="tag">Manual</span>'
-echo '<h2>5.6 Enable OCSP and CRL certificate checking (Scored)</h2>'
+echo '<h2>5.9 Enable OCSP and CRL certificate checking (Scored)</h2>'
 
 echo '<h3>CRL</h3>'
 echo '<h4>Expected Result</h4>'
@@ -1811,7 +1811,7 @@ echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
 
-echo '<h2>5.9 Require a password to wake the computer from sleep or screen saver (Scored)</h2>'
+echo '<h2>5.13 Require a password to wake the computer from sleep or screen saver (Scored)</h2>'
 
 echo '<h4>Expected Result</h4>'
 echo '<p class="result">1</p>'
@@ -1838,7 +1838,7 @@ echo '</div>'
 echo '<div class="item">'
 
 #echo '<span class="tag">Manual</span>'
-echo '<h2>5.10 Require an administrator password to access system-wide preferences (Scored)</h2>'
+echo '<h2>5.15 Require an administrator password to access system-wide preferences (Scored)</h2>'
 
 echo '<h4>Expected Result</h4>'
 echo '<p class="result">false &nbsp;</p>'
@@ -1867,7 +1867,7 @@ echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
 
-echo "<h2>5.11 Disable ability to login to another user's active and locked session (Scored)</h2>"
+echo "<h2>5.16 Disable ability to login to another user's active and locked session (Scored)</h2>"
 
 echo '<h4>Expected Result</h4>'
 echo '<p class="result">&nbsp;</p>'
