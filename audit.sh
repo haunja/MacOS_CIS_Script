@@ -1761,7 +1761,7 @@ echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
 
-echo '<h2>5.7 Do not enable the <em>root</em> account (Scored)</h2>'
+echo '<h2>5.11 Do not enable the <em>root</em> account (Scored)</h2>'
 
 echo '<h4>Expected Result</h4>'
 echo '<p class="result">No such key: AuthenticationAuthority</p>'
