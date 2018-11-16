@@ -1895,7 +1895,7 @@ echo '</div>'
 echo '<div class="item">'
 
 echo '<span class="tag">Manual</span>'
-echo '<h2>5.12 Create a custom message for the Login Screen (Scored)</h2>'
+echo '<h2>5.17 Create a custom message for the Login Screen (Scored)</h2>'
 
 echo '<h4>Expected Result</h4>'
 echo '<p class="result">SECURITY NOTICE: This is a US Government system for authorized use only. Users have no explicit or implicit expectation of privacy. All use of this system may be intercepted, monitored, recorded, inspected, and disclosed to authorized Government officials. Unauthorized or improper use may result in disciplinary action, civil, and criminal penalties. By continuing to use this system you indicate your consent to these terms and conditions of use. LOG OFF IMMEDIATELY if you do not agree to these conditions.</p>'
