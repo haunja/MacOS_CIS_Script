@@ -1875,6 +1875,31 @@ else
 fi
 
 echo '</div>'
+
+# -------------------------------------
+echo '<div class="item">'
+
+#echo '<span class="tag">Manual</span>'
+echo '<h2>5.4 Use a separate timestamp for each user/tty combo(Scored)</h2>'
+
+echo '<h4>Expected Result</h4>'
+echo '<p class="result">&nbsp;</p>'
+
+echo '<h4>Actual Result</h4>'
+RESULT=$(cat /etc/sudoers | grep tty_tickets)
+echo "<p class=\"result\">$RESULT &nbsp;</p>"
+
+if [[ "$RESULT" == "" ]];
+then
+    echo '<p class="result compliant">Compliant</p>'
+else
+    echo '<p class="result non-compliant">Non-Compliant</p>'
+
+    echo '<h5>Remediation</h5>'
+    echo '<p>Remove "Defaults !tty_tickets" from the /etc/sudoer file using visudo<br />'
+fi
+
+echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
 
