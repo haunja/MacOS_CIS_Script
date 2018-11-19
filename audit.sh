@@ -1316,6 +1316,32 @@ echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
 
+echo '<h2>5.1.4 Check Library folder for world writable files (Scored)</h2>'
+
+echo '<h4>Expected Result</h4>'
+echo '<p class="result">&nbsp;</p>'
+
+echo '<h4>Actual Result</h4>'
+RESULT=$(sudo find /Library -type d -perm -2 -ls | grep -v Caches)
+echo "<p class=\"result pre\">$RESULT &nbsp;</p>"
+
+echo '<h4>Findings</h4>'
+if [[ "$RESULT" == '' ]];
+then
+    echo '<p class="result compliant">Compliant</p>'
+else
+    echo '<p class="result non-compliant">Non-Compliant</p>'
+fi
+
+echo '<h5>Remediation</h5>'
+echo '<p>Run the following command in Terminal:<br />'
+echo '<code>sudo chmod -R o-w /path/to/{bad directory}</code><br />'
+echo '<em>Where /path/to/{bad directory} is the path and folder to be reconfigured.</em></p>'
+
+echo '</div>'
+# -------------------------------------
+echo '<div class="item">'
+
 echo '<h2>5.2.1 Configure account lockout threshold (Scored)</h2>'
 
 echo '<h4>Expected Result</h4>'
