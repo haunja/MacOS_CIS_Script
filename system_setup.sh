@@ -327,6 +327,12 @@ cd "$parent_path"
         # Change permissions so that "Others" can only execute. (Example Below)
         # Run the following command in Terminal:
         # sudo chmod -R o-w /Bad/Directory
+		
+		# 5.1.4 Check Library folder for world writable files (Scored) - MANUAL
+        # Remediation:
+        # Change permissions so that "Others" can only execute. (Example Below)
+        # Run the following command in Terminal:
+        # sudo chmod -R o-w /Bad/Directory
         
     # 5.2 Password Management
     
