@@ -36,7 +36,7 @@ boot_rom_ver="${boot_rom_ver##*( )}"
 echo '<!doctype html>'
 echo '<html>'
 echo '<head>'
-echo '<title>CIS Apple OSX 10.12 Benchmark Results</title>'
+echo '<title>CIS Apple OSX 10.13 Benchmark Results</title>'
 echo '<style>body {font-family: sans-serif;} div {padding: 10px;} pre {padding: 0 auto; margin: 0 auto;} .result {min-width: 300px; border: 1px solid #d3d3d3; border-radius: 4px; padding: 4px;} .pre {white-space:PRE;} .tag {margin-top: 1em; font-size: 10px; color: #E65100; border: 1px solid #FFD54F; border-radius: 4px; background-color: #FFECB3; padding: 4px;} .result-list {border: 1px solid #d3d3d3; border-radius: 4px;} .compliant {border: 1px solid #1B5E20; background-color: #C8E6C9;} .non-compliant {border: 1px solid #b71c1c; background-color: #ffcdd2;} div.item:nth-child(even){background-color: #f2f2f2; border: 1px solid #f2f2f2;} p.disclaimer{font-size: 0.8em;}</style>'
 echo '</head>'
 echo '<body>'
@@ -45,9 +45,9 @@ echo '<div>'
 echo '<h2>DISCLAIMER</h2>'
 echo '<p class="disclaimer">'
 echo 'This script was created to automate terminal commands for implementation of settings as outlined in:<br /><br />'
-echo 'CIS Apple OSX 10.12 Benchmark v1.0.0 - 11-04-2016'
+echo 'CIS Apple OSX 10.13 Benchmark v1.0.0 - 11-04-2016'
 echo '</p>'
-echo '<p class="disclaimer">This script was created by Craig Dorsey (heavily modified by Josh Wood) and has no warranty expressed or implied. This script will automate the audit of OS X 10.12 settings as defined by the aforementioned guide.</p>'
+echo '<p class="disclaimer">This script was created by Craig Dorsey (heavily modified by Josh Wood) and has no warranty expressed or implied. This script will automate the audit of OS X 10.13 settings as defined by the aforementioned guide.</p>'
 echo '<p style="color:red;"><strong>Use at your own risk.</strong></p>'
 echo '</div>'
 echo '<hr />'
@@ -310,38 +310,6 @@ echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
 
-echo '<h2>2.1.2 Turn off Bluetooth "Discoverable" mode when not pairing devices (Scored)</h2>'
-echo '<p>Note: In OS X Sierra (10.12), "Discoverable" status is now only enabled when the Bluetooth menu is open, otherwise it is disabled by default.</p>'
-
-echo '<h4>Expected Result</h4>'
-if [[ "$BluetoothPowerState" =~ "Off" ]];
-then
-    echo '<p class="result">Discoverable: Off</p>'
-    echo '<span><strong>or</strong></span>'
-    echo '<p class="result">&nbsp;</p>'
-else
-    echo '<p class="result">Discoverable: On</p>'
-fi
-
-echo '<h4>Actual Result</h4>'
-RESULT=$(/usr/sbin/system_profiler SPBluetoothDataType | grep -i discoverable)
-echo "<p class=\"result\">$RESULT &nbsp;</p>"
-
-echo '<h4>Findings</h4>'
-if [[ "$BluetoothPowerState" =~ "On" ]] && [[ "$RESULT" =~ "Discoverable: On" ]];
-then
-    echo '<p class="result non-compliant">Non-Compliant</p>'
-
-    echo '<h5>Remediation</h5>'
-    echo '<p>Starting with OS X (10.9) Bluetooth is only set to Discoverable when the Bluetooth System Preference is selected. To ensure that the computer is not "Discoverable" do not leave the Bluetooth system preferences window open.</p>'
-else
-    echo '<p class="result compliant">Compliant</p>'
-fi
-
-echo '</div>'
-# -------------------------------------
-echo '<div class="item">'
-
 echo '<h2>2.1.3 Show Bluetooth status in menu bar (Scored)</h2>'
 
 echo '<h4>Expected Result</h4>'
@@ -457,7 +425,7 @@ echo '</div>'
 echo '<div class="item">'
 
 echo '<span class="tag">Manual</span>'
-echo '<h2>2.3.2 & 2.3.4 Screen Saver Corners (Scored)</h2>'
+echo '<h2>2.3.2 Screen Saver Corners (Scored)</h2>'
 
 echo '<h4>Expected Result</h4>'
 echo '<ul class="result-list">'
@@ -1062,97 +1030,6 @@ echo "<p class=\"result pre\">$RESULT &nbsp;</p>"
 
 echo '<h5>Remediation</h5>'
 echo '<p>Java 6 can be uninstalled completely or, if necessary Java applications will only work with Java 6, a custom path can be used.</p>'
-
-echo '</div>'
-# -------------------------------------
-echo '<div class="item">'
-
-#echo '<span class="tag">Manual</span>'
-echo '<h2>3.1.1 Retain system.log for 90 or more days (Scored)</h2>'
-
-echo '<h4>Expected Result</h4>'
-echo '<p class="result">90</p>'
-
-echo '<h4>Actual Result</h4>'
-RESULT=$(grep -i system.log /etc/asl.conf | grep -Eo ttl="([[:digit:]]+)" | grep -Eo "([[:digit:]]+)")
-echo "<p class=\"result\">$RESULT &nbsp;</p>"
-
-echo '<h4>Findings</h4>'
-if [[ "$RESULT" =~ "90" ]];
-then
-    echo '<p class="result compliant">Compliant</p>'
-else
-    echo '<p class="result non-compliant">Non-Compliant</p>'
-
-    echo '<h5>Remediation</h5>'
-    # echo '<p><ol>'
-    # echo "<li>Run this command in terminal:<br /><code>sudo vim /etc/asl.conf</code></li>"
-    # echo "<li>Replace or edit the current setting with the following:<br /><code>system.log mode=0640 format=bsd rotate=utc compress file_max=5M ttl=90</code></li>"
-    # echo "<li>Run the following command in Terminal:<br /><code>sudo /usr/bin/sed -i.bak 's/^>\ system\.log.*/>\ system\.log\ mode=640\ format=bsd\ rotate=utc\ compress\ file_max=5M\ ttl=90/' /etc/asl.conf</code></li>"
-    # echo '</ol></p>'
-    echo '<p>Run the system configuration script again and reboot the device before running the audit script.</p>'
-fi    
-
-echo '</div>'
-# -------------------------------------
-echo '<div class="item">'
-
-#echo '<span class="tag">Manual</span>'
-echo '<h2>3.1.2 Retain appfirewall.log for 90 or more days (Scored)</h2>'
-
-echo '<h4>Expected Result</h4>'
-echo '<p class="result">90</p>'
-
-echo '<h4>Actual Result</h4>'
-RESULT=$(grep -i appfirewall.log /etc/asl.conf | grep -Eo ttl="([[:digit:]]+)" | grep -Eo "([[:digit:]]+)")
-echo "<p class=\"result\">$RESULT &nbsp;</p>"
-
-echo '<h4>Findings</h4>'
-if [[ "$RESULT" =~ "90" ]];
-then
-    echo '<p class="result compliant">Compliant</p>'
-else
-    echo '<p class="result non-compliant">Non-Compliant</p>'
-
-    echo '<h5>Remediation</h5>'
-    # echo '<p><ol>'
-    # echo '<li>Run this command in terminal:<br /><code>sudo vim /etc/asl.conf</code></li>'
-    # echo "<li>Replace or edit the current setting with the following:<br /><code>appfirewall.log mode=0640 format=bsd rotate=utc compress file_max=5M ttl=90</code></li>"
-    # echo "<li>Run the following command in terminal:<br /><code>sudo /usr/bin/sed -i.bak 's/^\?\ \[=\ Facility\ com.apple.alf.logging\]\ .*/\?\ \[=\ Facility\ com.apple.alf.logging\]\ file\ appfirewall.log\ mode=0640\ format=bsd\ rotate=utc\ compress\ file_max=5M\ ttl=90/' /etc/asl.conf</code></li>"
-    # echo '</ol></p>'
-    echo '<p>Run the system configuration script again and reboot the device before running the audit script.</p>'
-fi
-
-echo '</div>'
-# -------------------------------------
-echo '<div class="item">'
-
-#echo '<span class="tag">Manual</span>'
-echo '<h2>3.1.3 Retain authd.log for 90 or more days (Scored)</h2>'
-
-echo '<h4>Expected Result</h4>'
-echo '<p class="result">90</p>'
-
-echo '<h4>Actual Result</h4>'
-RESULT=$(grep -i authd.log /etc/asl/com.apple.authd | grep -Eo ttl="([[:digit:]]+)" | grep -Eo "([[:digit:]]+)")
-echo "<p class=\"result\">$RESULT &nbsp;</p>"
-
-echo '<h4>Findings</h4>'
-if [[ "$RESULT" =~ "90" ]];
-then
-    echo '<p class="result compliant">Compliant</p>'
-else
-    echo '<p class="result non-compliant">Non-Compliant</p>'
-
-    echo '<h5>Remediation</h5>'
-    # echo '<p><ol>'
-    # echo '<li>Run the following command in Terminal:<br/><code>sudo vim /etc/asl/com.apple.authd</code></li>'
-    # echo '<li>Replace or edit the current setting with the following:<br/><code>* file /var/log/authd.log mode=0640 format=bsd rotate=utc compress file_max=5M ttl=90</code></li>'
-    # echo '<li>Run the following command in Terminal:<br />'
-    # echo "<code>sudo /usr/bin/sed -i.bak 's/^\*\ file\ \/var\/log\/authd\.log.*/\*\ file\ \/var\/log\/authd\.log\ mode=640\ format=bsd\ rotate=utc\ compress\ file_max=5M\ ttl=90/' /etc/asl/com.apple.authd</code></li>"
-    # echo '</ol></p>'
-    echo '<p>Run the system configuration script again and reboot the device before running the audit script.</p>'
-fi
 
 echo '</div>'
 # -------------------------------------
