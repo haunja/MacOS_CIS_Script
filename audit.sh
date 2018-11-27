@@ -36,7 +36,7 @@ boot_rom_ver="${boot_rom_ver##*( )}"
 echo '<!doctype html>'
 echo '<html>'
 echo '<head>'
-echo '<title>CIS Apple OSX 10.12 Benchmark Results</title>'
+echo '<title>CIS Apple OSX 10.13 Benchmark Results</title>'
 echo '<style>body {font-family: sans-serif;} div {padding: 10px;} pre {padding: 0 auto; margin: 0 auto;} .result {min-width: 300px; border: 1px solid #d3d3d3; border-radius: 4px; padding: 4px;} .pre {white-space:PRE;} .tag {margin-top: 1em; font-size: 10px; color: #E65100; border: 1px solid #FFD54F; border-radius: 4px; background-color: #FFECB3; padding: 4px;} .result-list {border: 1px solid #d3d3d3; border-radius: 4px;} .compliant {border: 1px solid #1B5E20; background-color: #C8E6C9;} .non-compliant {border: 1px solid #b71c1c; background-color: #ffcdd2;} div.item:nth-child(even){background-color: #f2f2f2; border: 1px solid #f2f2f2;} p.disclaimer{font-size: 0.8em;}</style>'
 echo '</head>'
 echo '<body>'
@@ -45,9 +45,9 @@ echo '<div>'
 echo '<h2>DISCLAIMER</h2>'
 echo '<p class="disclaimer">'
 echo 'This script was created to automate terminal commands for implementation of settings as outlined in:<br /><br />'
-echo 'CIS Apple OSX 10.12 Benchmark v1.0.0 - 11-04-2016'
+echo 'CIS Apple OSX 10.13 Benchmark v1.0.0 - 11-04-2016'
 echo '</p>'
-echo '<p class="disclaimer">This script was created by Craig Dorsey (heavily modified by Josh Wood) and has no warranty expressed or implied. This script will automate the audit of OS X 10.12 settings as defined by the aforementioned guide.</p>'
+echo '<p class="disclaimer">This script was created by Craig Dorsey (heavily modified by Josh Wood) and has no warranty expressed or implied. This script will automate the audit of OS X 10.13 settings as defined by the aforementioned guide.</p>'
 echo '<p style="color:red;"><strong>Use at your own risk.</strong></p>'
 echo '</div>'
 echo '<hr />'
@@ -310,38 +310,6 @@ echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
 
-echo '<h2>2.1.2 Turn off Bluetooth "Discoverable" mode when not pairing devices (Scored)</h2>'
-echo '<p>Note: In OS X Sierra (10.12), "Discoverable" status is now only enabled when the Bluetooth menu is open, otherwise it is disabled by default.</p>'
-
-echo '<h4>Expected Result</h4>'
-if [[ "$BluetoothPowerState" =~ "Off" ]];
-then
-    echo '<p class="result">Discoverable: Off</p>'
-    echo '<span><strong>or</strong></span>'
-    echo '<p class="result">&nbsp;</p>'
-else
-    echo '<p class="result">Discoverable: On</p>'
-fi
-
-echo '<h4>Actual Result</h4>'
-RESULT=$(/usr/sbin/system_profiler SPBluetoothDataType | grep -i discoverable)
-echo "<p class=\"result\">$RESULT &nbsp;</p>"
-
-echo '<h4>Findings</h4>'
-if [[ "$BluetoothPowerState" =~ "On" ]] && [[ "$RESULT" =~ "Discoverable: On" ]];
-then
-    echo '<p class="result non-compliant">Non-Compliant</p>'
-
-    echo '<h5>Remediation</h5>'
-    echo '<p>Starting with OS X (10.9) Bluetooth is only set to Discoverable when the Bluetooth System Preference is selected. To ensure that the computer is not "Discoverable" do not leave the Bluetooth system preferences window open.</p>'
-else
-    echo '<p class="result compliant">Compliant</p>'
-fi
-
-echo '</div>'
-# -------------------------------------
-echo '<div class="item">'
-
 echo '<h2>2.1.3 Show Bluetooth status in menu bar (Scored)</h2>'
 
 echo '<h4>Expected Result</h4>'
@@ -425,7 +393,6 @@ echo '<br/>'
 echo '<p>All network time servers listed in `/etc/ntp.conf`:<br />'
 echo "$ALL_NTS"
 echo '</p>'
-# Section 2.2.3 Restrict NTP server to loopback interfact remove in 10.13 CIS Benchmark  JAH
 echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
@@ -458,7 +425,7 @@ echo '</div>'
 echo '<div class="item">'
 
 echo '<span class="tag">Manual</span>'
-echo '<h2>2.3.2 & 2.3.4 Screen Saver Corners (Scored)</h2>'
+echo '<h2>2.3.2 Screen Saver Corners (Scored)</h2>'
 
 echo '<h4>Expected Result</h4>'
 echo '<ul class="result-list">'
@@ -800,33 +767,6 @@ echo '<code>sudo pmset -a womp 0 ; sudo pmset -c womp 0</code></p>'
 
 echo '</div>'
 # -------------------------------------
-#echo '<div class="item">'
-
-#echo '<span class="tag">Manual</span>'
-#echo '<h2>2.5.2 Disable sleeping the computer when connected to power (Scored)</h2>'
-
-#echo '<p>Note: Device must be plugged in to AC power to receive compliant result.</p>'
-
-#echo '<h4>Expected Result</h4>'
-#echo '<p class="result">0</p>'
-
-#echo '<h4>Actual Result</h4>'
-#RESULT=$(pmset -g | grep ^sleep$)
-#echo "<p class=\"result pre\">$RESULT &nbsp;</p>"
-
-#if [[ "$RESULT" == "0" ]];
-#then
-#    echo '<p class="result compliant">Compliant</p>'
-#else
-#    echo '<p class="result non-compliant">Non-Compliant</p>'
-#    
-#    echo '<h5>Remediation</h5>'
-#    echo '<p>Run the following commands in Terminal:<br />'
-#    echo '<code>sudo pmset -c sleep 0</code></p>'
-#fi
-
-#echo '</div>'
-# -------------------------------------
 echo '<div class="item">'
 
 echo '<h2>2.6.1 Enable FileVault (Scored)</h2>'
@@ -1095,98 +1035,7 @@ echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
 
-#echo '<span class="tag">Manual</span>'
-echo '<h2>3.1.1 Retain system.log for 90 or more days (Scored)</h2>'
-
-echo '<h4>Expected Result</h4>'
-echo '<p class="result">90</p>'
-
-echo '<h4>Actual Result</h4>'
-RESULT=$(grep -i system.log /etc/asl.conf | grep -Eo ttl="([[:digit:]]+)" | grep -Eo "([[:digit:]]+)")
-echo "<p class=\"result\">$RESULT &nbsp;</p>"
-
-echo '<h4>Findings</h4>'
-if [[ "$RESULT" =~ "90" ]];
-then
-    echo '<p class="result compliant">Compliant</p>'
-else
-    echo '<p class="result non-compliant">Non-Compliant</p>'
-
-    echo '<h5>Remediation</h5>'
-    # echo '<p><ol>'
-    # echo "<li>Run this command in terminal:<br /><code>sudo vim /etc/asl.conf</code></li>"
-    # echo "<li>Replace or edit the current setting with the following:<br /><code>system.log mode=0640 format=bsd rotate=utc compress file_max=5M ttl=90</code></li>"
-    # echo "<li>Run the following command in Terminal:<br /><code>sudo /usr/bin/sed -i.bak 's/^>\ system\.log.*/>\ system\.log\ mode=640\ format=bsd\ rotate=utc\ compress\ file_max=5M\ ttl=90/' /etc/asl.conf</code></li>"
-    # echo '</ol></p>'
-    echo '<p>Run the system configuration script again and reboot the device before running the audit script.</p>'
-fi    
-
-echo '</div>'
-# -------------------------------------
-echo '<div class="item">'
-
-#echo '<span class="tag">Manual</span>'
-echo '<h2>3.1.2 Retain appfirewall.log for 90 or more days (Scored)</h2>'
-
-echo '<h4>Expected Result</h4>'
-echo '<p class="result">90</p>'
-
-echo '<h4>Actual Result</h4>'
-RESULT=$(grep -i appfirewall.log /etc/asl.conf | grep -Eo ttl="([[:digit:]]+)" | grep -Eo "([[:digit:]]+)")
-echo "<p class=\"result\">$RESULT &nbsp;</p>"
-
-echo '<h4>Findings</h4>'
-if [[ "$RESULT" =~ "90" ]];
-then
-    echo '<p class="result compliant">Compliant</p>'
-else
-    echo '<p class="result non-compliant">Non-Compliant</p>'
-
-    echo '<h5>Remediation</h5>'
-    # echo '<p><ol>'
-    # echo '<li>Run this command in terminal:<br /><code>sudo vim /etc/asl.conf</code></li>'
-    # echo "<li>Replace or edit the current setting with the following:<br /><code>appfirewall.log mode=0640 format=bsd rotate=utc compress file_max=5M ttl=90</code></li>"
-    # echo "<li>Run the following command in terminal:<br /><code>sudo /usr/bin/sed -i.bak 's/^\?\ \[=\ Facility\ com.apple.alf.logging\]\ .*/\?\ \[=\ Facility\ com.apple.alf.logging\]\ file\ appfirewall.log\ mode=0640\ format=bsd\ rotate=utc\ compress\ file_max=5M\ ttl=90/' /etc/asl.conf</code></li>"
-    # echo '</ol></p>'
-    echo '<p>Run the system configuration script again and reboot the device before running the audit script.</p>'
-fi
-
-echo '</div>'
-# -------------------------------------
-echo '<div class="item">'
-
-#echo '<span class="tag">Manual</span>'
-echo '<h2>3.1.3 Retain authd.log for 90 or more days (Scored)</h2>'
-
-echo '<h4>Expected Result</h4>'
-echo '<p class="result">90</p>'
-
-echo '<h4>Actual Result</h4>'
-RESULT=$(grep -i authd.log /etc/asl/com.apple.authd | grep -Eo ttl="([[:digit:]]+)" | grep -Eo "([[:digit:]]+)")
-echo "<p class=\"result\">$RESULT &nbsp;</p>"
-
-echo '<h4>Findings</h4>'
-if [[ "$RESULT" =~ "90" ]];
-then
-    echo '<p class="result compliant">Compliant</p>'
-else
-    echo '<p class="result non-compliant">Non-Compliant</p>'
-
-    echo '<h5>Remediation</h5>'
-    # echo '<p><ol>'
-    # echo '<li>Run the following command in Terminal:<br/><code>sudo vim /etc/asl/com.apple.authd</code></li>'
-    # echo '<li>Replace or edit the current setting with the following:<br/><code>* file /var/log/authd.log mode=0640 format=bsd rotate=utc compress file_max=5M ttl=90</code></li>'
-    # echo '<li>Run the following command in Terminal:<br />'
-    # echo "<code>sudo /usr/bin/sed -i.bak 's/^\*\ file\ \/var\/log\/authd\.log.*/\*\ file\ \/var\/log\/authd\.log\ mode=640\ format=bsd\ rotate=utc\ compress\ file_max=5M\ ttl=90/' /etc/asl/com.apple.authd</code></li>"
-    # echo '</ol></p>'
-    echo '<p>Run the system configuration script again and reboot the device before running the audit script.</p>'
-fi
-
-echo '</div>'
-# -------------------------------------
-echo '<div class="item">'
-
-echo '<h2>3.2 Enable security auditing (Scored)</h2>'
+echo '<h2>3.1 Enable security auditing (Scored)</h2>'
 
 echo '<h4>Expected Result</h4>'
 echo '<p class="result">com.apple.auditd</p>'
@@ -1210,7 +1059,7 @@ echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
 
-echo '<h2>3.3 Configure Security Auditing Flags (Scored)</h2>'
+echo '<h2>3.2 Configure Security Auditing Flags (Scored)</h2>'
 
 echo '<h4>Expected Result</h4>'
 echo '<p class="result">flags:lo,ad,fd,fm,-all</p>'
@@ -1336,19 +1185,12 @@ else
 fi
 
 echo '</div>'
-# -------------------------------------
-#echo '<div class="item">'
 
-#echo '<h2>4.5 Ensure ftp server is not running (Scored)</h2>'*********FTP server was removed from MacOS 10.13
-
-
-
-#echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
 
 #echo '<span class="tag">Manual</span>'
-echo '<h2>4.6 Ensure nfs server is not running (Scored)</h2>'
+echo '<h2>4.5 Ensure nfs server is not running (Scored)</h2>'
 
 echo '<h4>Expected Result</h4>'
 echo '<p class="result">nfsd service is enabled<br />nfsd is not running</p>'
@@ -1455,6 +1297,32 @@ echo '<p class="result">&nbsp;</p>'
 
 echo '<h4>Actual Result</h4>'
 RESULT=$(sudo find /System -type d -perm -2 -ls | grep -v 'Public/Drop Box')
+echo "<p class=\"result pre\">$RESULT &nbsp;</p>"
+
+echo '<h4>Findings</h4>'
+if [[ "$RESULT" == '' ]];
+then
+    echo '<p class="result compliant">Compliant</p>'
+else
+    echo '<p class="result non-compliant">Non-Compliant</p>'
+fi
+
+echo '<h5>Remediation</h5>'
+echo '<p>Run the following command in Terminal:<br />'
+echo '<code>sudo chmod -R o-w /path/to/{bad directory}</code><br />'
+echo '<em>Where /path/to/{bad directory} is the path and folder to be reconfigured.</em></p>'
+
+echo '</div>'
+# ------------------------------------- FAILS
+echo '<div class="item">'
+
+echo '<h2>5.1.4 Check Library folder for world writable files (Scored)</h2>'
+
+echo '<h4>Expected Result</h4>'
+echo '<p class="result">&nbsp;</p>'
+
+echo '<h4>Actual Result</h4>'
+RESULT=$(sudo find /Library -type d -perm -2 -ls | grep -v Caches)
 echo "<p class=\"result pre\">$RESULT &nbsp;</p>"
 
 echo '<h4>Findings</h4>'
@@ -1716,7 +1584,7 @@ echo '</div>'
 echo '<div class="item">'
 
 # echo '<span class="tag">Manual</span>'
-echo '<h2>5.4 Automatically lock the login keychain for inactivity (Scored)</h2>'
+echo '<h2>5.7 Automatically lock the login keychain for inactivity (Scored)</h2>'
 
 echo '<h4>Expected Result</h4>'
 echo '<p class="result">21600</p>'
@@ -1750,7 +1618,7 @@ echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
 #echo '<span class="tag">Manual</span>'
-echo '<h2>5.6 Enable OCSP and CRL certificate checking (Scored)</h2>'
+echo '<h2>5.9 Enable OCSP and CRL certificate checking (Scored)</h2>'
 
 echo '<h3>CRL</h3>'
 echo '<h4>Expected Result</h4>'
@@ -1796,7 +1664,7 @@ echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
 
-echo '<h2>5.7 Do not enable the <em>root</em> account (Scored)</h2>'
+echo '<h2>5.11 Do not enable the <em>root</em> account (Scored)</h2>'
 
 echo '<h4>Expected Result</h4>'
 echo '<p class="result">No such key: AuthenticationAuthority</p>'
@@ -1822,7 +1690,7 @@ echo '</div>'
 echo '<div class="item">'
 
 #echo '<span class="tag">Manual</span>'
-echo '<h2>5.8 Disable automatic login (Scored)</h2>'
+echo '<h2>5.12 Disable automatic login (Scored)</h2>'
 
 echo '<h4>Expected Result</h4>'
 echo '<p class="result">&nbsp;</p>'
@@ -1846,7 +1714,7 @@ echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
 
-echo '<h2>5.9 Require a password to wake the computer from sleep or screen saver (Scored)</h2>'
+echo '<h2>5.13 Require a password to wake the computer from sleep or screen saver (Scored)</h2>'
 
 echo '<h4>Expected Result</h4>'
 echo '<p class="result">1</p>'
@@ -1873,7 +1741,7 @@ echo '</div>'
 echo '<div class="item">'
 
 #echo '<span class="tag">Manual</span>'
-echo '<h2>5.10 Require an administrator password to access system-wide preferences (Scored)</h2>'
+echo '<h2>5.15 Require an administrator password to access system-wide preferences (Scored)</h2>'
 
 echo '<h4>Expected Result</h4>'
 echo '<p class="result">false &nbsp;</p>'
@@ -1902,7 +1770,7 @@ echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
 
-echo "<h2>5.11 Disable ability to login to another user's active and locked session (Scored)</h2>"
+echo "<h2>5.16 Disable ability to login to another user's active and locked session (Scored)</h2>"
 
 echo '<h4>Expected Result</h4>'
 echo '<p class="result">&nbsp;</p>'
@@ -1930,7 +1798,7 @@ echo '</div>'
 echo '<div class="item">'
 
 echo '<span class="tag">Manual</span>'
-echo '<h2>5.12 Create a custom message for the Login Screen (Scored)</h2>'
+echo '<h2>5.17 Create a custom message for the Login Screen (Scored)</h2>'
 
 echo '<h4>Expected Result</h4>'
 echo '<p class="result">SECURITY NOTICE: This is a US Government system for authorized use only. Users have no explicit or implicit expectation of privacy. All use of this system may be intercepted, monitored, recorded, inspected, and disclosed to authorized Government officials. Unauthorized or improper use may result in disciplinary action, civil, and criminal penalties. By continuing to use this system you indicate your consent to these terms and conditions of use. LOG OFF IMMEDIATELY if you do not agree to these conditions.</p>'
@@ -1948,7 +1816,7 @@ echo '</div>'
 echo '<div class="item">'
 
 echo '<span class="tag">Manual</span>'
-echo '<h2>5.13 Create a Login window banner (Scored)</h2>'
+echo '<h2>5.18 Create a Login window banner (Scored)</h2>'
 
 echo '<h4>Expected Result</h4>'
 echo '<p class="result">{\rtf1\ansi\ansicpg1252\cocoartf1344\cocoasubrtf720 {\fonttbl\f0\fswiss\fcharset0 Helvetica;} {\colortbl;\red255\green255\blue255;\red217\green11\blue0;} \margl1440\margr1440\vieww10800\viewh8400\viewkind0 \deftab720 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720 \f0\fs24 \cf0 \expnd0\expndtw0\kerning0 This is a Federal computer system and is property of the United States Government. It is for authorized use only. Users (authorized or unauthorized) have no explicit or implicit expectation of privacy.\uc0\u8232 \u8232 Any or all uses of this system and all files on this system may be intercepted, monitored, recorded, copied, audited, inspected, and disclosed to authorized site, Department of Energy, and law enforcement personnel, as well as authorized officials of other agencies, both domestic and foreign. By using this system, the user consents to such interception, monitoring, recording, copying, auditing, inspection, and disclosure at the discretion of authorized site or Department of Energy personnel.\u8232 \u8232 Unauthorized use of this system may result in administrative disciplinary action and civil and criminal penalties. By continuing to use this system you indicate your awareness of and consent to these terms and conditions of use. \b \cf2 LOG OFF IMMEDIATELY \b0 \cf0 if you do not agree to the conditions stated in this warning.} </p>'
@@ -1965,7 +1833,7 @@ echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
 echo '<span class="tag">Manual</span>'
-echo '<h2>5.14 Do not enter a password-related hint (Not Scored)</h2>'
+echo '<h2>5.19 Do not enter a password-related hint (Not Scored)</h2>'
 
 echo "<p>A manual check of each account's login information is required to confirm compliance to this criteria. Ensure that no account has a password hint.</p>"
 
@@ -1984,7 +1852,7 @@ echo '</div>'
 echo '<div class="item">'
 
 #echo '<span class="tag">Manual</span>'
-echo '<h2>5.18 System Integrity Protection status (Scored)</h2>'
+echo '<h2>5.23 System Integrity Protection status (Scored)</h2>'
 
 echo '<h4>Expected Result</h4>'
 echo '<p class="result">enabled</p>'
@@ -2004,6 +1872,31 @@ else
     echo '<code>/usr/bin/csrutil enable</code><br />'
     echo 'The output should be:<br />'
     echo '<code>Successfully enabled System Integrity Protection. Please restart the machine for the changes to take effect.</code></p>'
+fi
+
+echo '</div>'
+
+# -------------------------------------
+echo '<div class="item">'
+
+#echo '<span class="tag">Manual</span>'
+echo '<h2>5.4 Use a separate timestamp for each user/tty combo(Scored)</h2>'
+
+echo '<h4>Expected Result</h4>'
+echo '<p class="result">&nbsp;</p>'
+
+echo '<h4>Actual Result</h4>'
+RESULT=$(sudo cat /etc/sudoers | grep tty_tickets)
+echo "<p class=\"result\">$RESULT &nbsp;</p>"
+
+if [[ "$RESULT" == "" ]];
+then
+    echo '<p class="result compliant">Compliant</p>'
+else
+    echo '<p class="result non-compliant">Non-Compliant</p>'
+
+    echo '<h5>Remediation</h5>'
+    echo '<p>Remove "Defaults !tty_tickets" from the /etc/sudoer file using visudo<br />'
 fi
 
 echo '</div>'
