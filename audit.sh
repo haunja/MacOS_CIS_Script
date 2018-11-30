@@ -903,7 +903,7 @@ fi
 echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
-
+echo '<span class="tag">Manual</span>'
 echo '<h2>2.7.4 iCloud Drive Document sync (Scored)</h2>'
 
 echo '<h4>Expected Result</h4>'
@@ -926,7 +926,40 @@ else
     # echo '<li>Select iCloud</li>'
     # echo '<li>Select iCloud Drive</li>'
     # echo '<li>Select Options next to iCloud Drive</li>'
-    # echo '<li>Uncheck Desktop & Documents Folders</li>'
+    # echo '<li>Uncheck Documents Folders</li>'
+    # echo '</ol></p>'
+    echo '<p>Refer to the provided <strong>ReadMe.pdf</strong> for instructions.</p>'
+
+fi
+
+echo '</div>'    
+
+# -------------------------------------
+echo '<div class="item">'
+echo '<span class="tag">Manual</span>'
+echo '<h2>2.7.5 iCloud Drive Desktop sync (Scored)</h2>'
+
+echo '<h4>Expected Result</h4>'
+echo '<p class="result">&nbsp;</p>'
+
+echo '<h4>Actual Result</h4>'
+RESULT=$(ls -l ~/Library/Mobile\ Documents/com~apple~CloudDocs/Desktop/ | grep total)
+echo "<p class=\"result\">$RESULT &nbsp;</p>"
+
+echo '<h4>Findings</h4>'
+if [[ "$RESULT" == '' ]];
+then
+    echo '<p class="result compliant">Compliant</p>'
+else
+    echo '<p class="result non-compliant">Non-Compliant</p>'
+
+    echo '<h5>Remediation</h5>'
+    # echo '<p><ol class="result-list">'
+    # echo '<li>Open System Preferences</li>'
+    # echo '<li>Select iCloud</li>'
+    # echo '<li>Select iCloud Drive</li>'
+    # echo '<li>Select Options next to iCloud Drive</li>'
+    # echo '<li>Uncheck Desktop Folders</li>'
     # echo '</ol></p>'
     echo '<p>Refer to the provided <strong>ReadMe.pdf</strong> for instructions.</p>'
 
@@ -986,7 +1019,7 @@ fi
 echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
-
+echo '<span class="tag">Manual</span>'
 echo '<h2>2.10 Enable Secure Keyboard Entry in terminal.app (Scored)</h2>'
 
 echo '<h4>Expected Result</h4>'
@@ -1290,7 +1323,7 @@ echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
 
-echo '<h2>5.1.3 Check System folder for world writable files (Scored)</h2>'
+echo '<h2>5.1.3 Check System folder for  writable files (Scored)</h2>'
 
 echo '<h4>Expected Result</h4>'
 echo '<p class="result">&nbsp;</p>'
@@ -1615,6 +1648,30 @@ else
 fi
 
 echo '</div>'
+
+# -------------------------------------
+echo '<div class="item">'
+echo '<span class="tag">Manual</span>'
+echo '<h2>5.8 Ensure Ensure login keychain is locked when the computer sleeps (Scored)</h2>'
+
+echo '<h4>Expected Result</h4>'
+echo '<p class="result">Keychain "<NULL>" lock-on-sleep </p>'
+
+echo '<h4>Actual Result</h4>'
+RESULT=$(security show-keychain-info 2>&1 | egrep lock-on-sleep)
+echo "<p class=\"result\">$RESULT &nbsp;</p>"
+
+echo '<h4>Findings</h4>'
+if [[ "$RESULT" =~ "Keychain \"<NULL>\" lock-on-sleep" ]];
+then
+    echo '<p class="result compliant">Compliant</p>'
+else
+    echo '<p class="result non-compliant">Non-Compliant</p>'
+fi
+
+echo '<h5>Remediation</h5>'
+echo '<p>Refer to the provided <strong>ReadMe.pdf</strong> for instructions.</p>'
+echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
 #echo '<span class="tag">Manual</span>'
@@ -1737,6 +1794,32 @@ echo '<code>sudo defaults write com.apple.screensaver askForPassword -bool TRUE<
 echo 'Note: The current user will need to log off and on for changes to take effect.</p>'
 
 echo '</div>'
+
+# -------------------------------------
+echo '<div class="item">'
+
+echo '<h2>5.14 Ensure system is set to hibernate (Scored)</h2>'
+
+echo '<h4>Expected Result</h4>'
+echo '<p class="result">standbydelayhigh 900</p>'
+
+echo '<h4>Actual Result</h4>'
+RESULT=$(pmset -g | egrep standbydelayhigh)
+echo "<p class=\"result\">$RESULT &nbsp;</p>"
+
+echo '<h4>Findings</h4>'
+if [[ "$RESULT" =~ "standbydelayhigh 900" ]];
+then
+    echo '<p class="result compliant">Compliant</p>'
+else
+    echo '<p class="result non-compliant">Non-Compliant</p>'
+fi
+
+echo '<h5>Remediation</h5>'
+echo '<p>Run the following command in Terminal:<br />'
+echo '<code>sudo pmset -a standbydelay 900</code></p>'
+
+echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
 
@@ -1769,7 +1852,7 @@ fi
 echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
-
+echo '<span class="tag">Manual</span>'
 echo "<h2>5.16 Disable ability to login to another user's active and locked session (Scored)</h2>"
 
 echo '<h4>Expected Result</h4>'

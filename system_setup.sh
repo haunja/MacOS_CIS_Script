@@ -401,13 +401,8 @@ cd "$parent_path"
     # 5.13 Create a Login window banner (Scored)
     sudo cp PolicyBanner.rtf /Library/Security/PolicyBanner.rtf
     
-    # 5.14 Do not enter a password-related hint (Not Scored) - MANUAL
-    # Remediation:
-    #    1. Open System Preferences
-    #    2. Select Users & Groups
-    #    3. Highlight the user
-    #    4. Select Change Password
-    #    5. Verify that no text is entered in the Password hint box
+    # 5.14 Ensure system is set to hibernate (Scored)
+    sudo pmset -a standbydelay 900
     
     # 5.18 System Integrity Protection status (Scored) - MANUAL
     # Remediation:
@@ -416,7 +411,17 @@ cd "$parent_path"
     #   /usr/bin/csrutil enable
     # The output should be: Successfully enabled System Integrity Protection. Please restart the machine for the changes to take effect.
     
+    #5.19 Do not enter a password-related hint (Not Scored) - MANUAL
+    # Remediation:
+    #    1. Open System Preferences
+    #    2. Select Users & Groups
+    #    3. Highlight the user
+    #    4. Select Change Password
+    #    5. Verify that no text is entered in the Password hint box
+    
+    
 # 6 User Accounts and Environment
+
 
     # 6.1.1 Display login window as name and password (Scored)
     sudo defaults write /Library/Preferences/com.apple.loginwindow SHOWFULLNAME -bool true
