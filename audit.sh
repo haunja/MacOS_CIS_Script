@@ -1143,6 +1143,7 @@ fi
 
 echo '</div>'
 
+
 # -------------------------------------
 echo '<div class="item">'
 
@@ -1165,6 +1166,32 @@ else
     echo '<h5>Remediation</h5>'
     echo '<p>Run the following command in Terminal:<br />'
     echo "<code>sudo /usr/bin/sed -i.bak 's/^\*\ file\ \/var\/log\/install\.log.*/\*\ file\ \/var\/log\/install\.log\ mode=0640\ format=bsd\ rotate=utc\ compress\ file_max=5M\ ttl=365/' /etc/asl/com.apple.install</code></p>"
+fi
+
+echo '</div>'
+
+# -------------------------------------
+echo '<div class="item">'
+
+# echo '<span class="tag">Manual</span>'
+echo '<h2>3.6 Ensure firewall is configured to log(Scored)</h2>'
+
+echo '<h4>Expected Result</h4>'
+echo '<p class="result">Log mode is on</p>'
+
+echo '<h4>Actual Result</h4>'
+RESULT=$(/usr/libexec/ApplicationFirewall/socketfilterfw --getloggingmode)
+echo "<p class=\"result\">$RESULT &nbsp;</p>"
+
+if [[ "$RESULT" =~ 'Log mode is on' ]];
+then
+    echo '<p class="result compliant">Compliant</p>'
+else
+    echo 'p class="result non-compliant">Non-Compliant</p>'
+
+    echo '<h5>Remediation</h5>'
+    echo '<p>Run the following command in Terminal:<br />'
+    echo "<code>sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setloggingmode on</code></p>"
 fi
 
 echo '</div>'
