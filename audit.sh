@@ -133,7 +133,7 @@ else
     echo '<li>Click <strong>Software update...</strong> &#45; If prompted, enter an admin name and password.</li>'
     echo '<li>Install all available updates and software patches that are applicable.</li>'
     echo '</ol>'
-fi    
+fi
 
 echo '</div>'
 # -------------------------------------
@@ -741,7 +741,7 @@ else
     echo '<p class="result non-compliant">Non-Compliant</p>'
     echo '<h5>Remediation</h5>'
     echo '<p>Run the following command in Terminal:<br /><code>sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -deactivate -stop</code></p>'
-    echo '<p>Note: Requires reboot to take effect.</p>'   
+    echo '<p>Note: Requires reboot to take effect.</p>'
 fi
 
 echo '</div>'
@@ -821,7 +821,7 @@ else
     echo '<p>Run the following command in Terminal:<br /><code>sudo spctl --master-ena</code></p>'
 fi
 
-echo '</div>'    
+echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
 
@@ -844,7 +844,7 @@ else
     echo '<h5>Remediation</h5>'
     echo '<p>Run the following command in Terminal:<br /><code>sudo defaults write /Library/Preferences/com.apple.alf globalstate -int 1</code></p>'
 fi
-    
+
 echo '</div>'
 # -------------------------------------
 # echo '<div class="item">'
@@ -868,7 +868,7 @@ echo '</div>'
 #     echo '<h5>Remediation</h5>'
 #     echo '<p>Run the following command in Terminal:<br /><code>sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setstealthmode on</code></p>'
 # fi
-    
+
 # echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
@@ -899,7 +899,7 @@ else
     echo '<li>Select <strong>the minus sign</strong> below to delete them</li>'
     echo '</ol></p>'
 fi
-    
+
 echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
@@ -932,7 +932,7 @@ else
 
 fi
 
-echo '</div>'    
+echo '</div>'
 
 # -------------------------------------
 echo '<div class="item">'
@@ -965,7 +965,7 @@ else
 
 fi
 
-echo '</div>'    
+echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
 
@@ -1015,7 +1015,7 @@ else
     # echo '</ol></p>'
     echo '<p>Refer to the provided <strong>ReadMe.pdf</strong> for instructions.</p>'
 fi
-    
+
 echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
@@ -1044,7 +1044,7 @@ else
     # echo '</ol></p>'
     echo '<p>Refer to the provided <strong>ReadMe.pdf</strong> for instructions.</p>'
 fi
-    
+
 echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
@@ -1111,11 +1111,38 @@ else
     echo '<h5>Remediation</h5>'
     echo '<p>Run the following command in Terminal:<br />'
     echo "<code>sudo /usr/bin/sed -i '' 's/^flags:.*/flags:lo,ad,fd,fm,-all/' /etc/security/audit_control</code><br />"
-    echo "<code>sudo /usr/bin/sed -i '' 's/^expire-after:.*/expire-after:90d\ AND\ 1G/' /etc/security/audit_control</code>"
     echo '</p>'
 fi
-    
+
 echo '</div>'
+
+# -------------------------------------
+echo '<div class="item">'
+
+echo '<h2>3.3 Ensure Security Auditing Retention (Scored)</h2>'
+
+echo '<h4>Expected Result</h4>'
+echo '<p class="result">expire-after:60D OR 1G</p>'
+
+echo '<h4>Actual Result</h4>'
+RESULT=$(sudo cat /etc/security/audit_control | egrep expire-after)
+echo "<p class=\"result\">$RESULT &nbsp;</p>"
+
+echo '<h4>Findings</h4>'
+if [[ "$RESULT" =~ 'expire-after:60D OR 1G' ]];
+then
+    echo '<p class="result compliant">Compliant</p>'
+else
+    echo '<p class="result non-compliant">Non-Compliant</p>'
+
+    echo '<h5>Remediation</h5>'
+    echo '<p>Run the following cammand in Terminal:<br />'
+    echo "<code>sudo /usr/bin/sed -i '' 's/^expire-after:.*/expire-after:60D\ OR\ 1G/' /etc/security/audit_control</code>"
+    echo '</p>'
+fi
+
+echo '</div>'
+
 # -------------------------------------
 echo '<div class="item">'
 
@@ -1189,7 +1216,7 @@ else
     echo '<h5>Remediation</h5>'
     echo "<p>Run the following command in Terminal:<br /><code>defaults write com.apple.systemuiserver menuExtras -array-add \'/System/Library/CoreServices/Menu Extras/AirPort.menu\'</code></p>"
 fi
-    
+
 echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
@@ -1394,7 +1421,7 @@ else
     echo '<h5>Remediation</h5>'
     echo '<p>Run the "user setup" script.</p>'
 fi
-    
+
 echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
@@ -2031,7 +2058,7 @@ else
     echo '<p>Run the following command in Terminal:<br />'
     echo '<code>sudo defaults write /Library/Preferences/com.apple.loginwindow RetriesUntilHint -int 0</code></p>'
 fi
-    
+
 echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
@@ -2100,7 +2127,7 @@ else
     echo '<p>Run the following commands in Terminal:<br />'
     echo '<code>sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server AllowGuestAccess -bool false</code></p>'
 fi
-    
+
 echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
@@ -2124,7 +2151,7 @@ else
     echo '<h5>Remediation</h5>'
     echo '<p>Run the following command in Terminal:<br />'
     echo '<code>rm -R /Users/Guest</code></p>'
-fi    
+fi
 
 echo '</div>'
 # -------------------------------------
@@ -2174,7 +2201,7 @@ else
     echo '<h5>Remediation</h5>'
     echo '<p>Run the following command in Terminal:<br />'
     echo '<code>defaults write com.apple.Safari AutoOpenSafeDownloads -bool false</code></p>'
-fi    
+fi
 
 echo '</div>'
 # -------------------------------------
