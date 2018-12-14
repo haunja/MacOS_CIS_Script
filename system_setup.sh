@@ -93,14 +93,10 @@ cd "$parent_path"
         sudo defaults write /Library/Preferences/com.apple.Bluetooth \ ControllerPowerState -int 0
         sudo killall -HUP blued
 
-        # 2.1.2 Turn off Bluetooth "Discoverable" mode when not pairing devices (Scored)
-        # Starting with OS X (10.9) Bluetooth is only set to Discoverable when the Bluetooth System Preference
-        # is selected. To ensure that the computer is not Discoverable do not leave that preference open.
-
         # 2.1.3 Show Bluetooth status in menu bar (Scored)
         #defaults write com.apple.systemuiserver menuExtras -array-add "/System/Library/CoreServices/Menu Extras/Bluetooth.menu"
 
-    # 2.2 Date & Time
+        # 2.2 Date & Time
 
         # 2.2.1 Enable "Set time and date automatically" (Not Scored)
 
@@ -350,7 +346,9 @@ cd "$parent_path"
     # In the "# Override built-in defaults" section, add the line:
     #   Defaults timestamp_timeout=0
 
-    # 5.4 Automatically lock the login keychain for inactivity (Scored) - MANUAL
+    # 5.4 Use a separate timestamp for each user/tty combo(Scored)
+
+    # 5.7 Automatically lock the login keychain for inactivity (Scored) - MANUAL
     # Remediation:
     # Run the following command in Terminal:
     #   1. Open Utilities
@@ -361,43 +359,47 @@ cd "$parent_path"
     #   6. Authenticate, if requested.
     #   7. Change the Lock after # minutes of inactivity setting for the Login Keychain to an approved value that should be longer than 6 hours or 3600 minutes or based on the access frequency of the security credentials included in the keychain for other keychains.
 
-    # 5.6 Enable OCSP and CRL certificate checking (Scored)
+    # 5.8 Ensure login keychain is locked when computer sleeps(Scored)
+
+    # 5.9 Enable OCSP and CRL certificate checking (Scored)
     sudo defaults write com.apple.security.revocation CRLStyle -string RequireIfPresent
     sudo defaults write com.apple.security.revocation OCSPStyle -string RequireIfPresent
 
-    # 5.7 Do not enable the "root" account (Scored)
+    # 5.11 Do not enable the "root" account (Scored)
     #note: you will be prompter to enter password, this cannot be bypassed with sudo
     dsenableroot -d
 
-    # 5.8 Disable automatic login (Scored)
+    # 5.12 Disable automatic login (Scored)
     sudo defaults delete /Library/Preferences/com.apple.loginwindow autoLoginUser
 
-    # 5.9 Require a password to wake the computer from sleep or screen saver (Scored)
+    # 5.13 Require a password to wake the computer from sleep or screen saver (Scored)
     # The current user will need to log off and on for changes to take effect.
     #sudo defaults write com.apple.screensaver askForPassword -int 1  -- This is obsolete as of 10.13
     #sudo defaults write com.apple.screensaver askForPassword -bool TRUE
     #This setting is per user,and not per device. Needs to be moved to user script
 
-    # 5.10 Require an administrator password to access system-wide preferences (Scored)
+    # 5.14 Ensure system is set to hibernate (Scored)
+    sudo pmset -a standbydelay 900
+
+    # 5.15 Require an administrator password to access system-wide preferences (Scored)
     /usr/bin/security authorizationdb read system.preferences > /tmp/system.preferences.plist
     /usr/bin/defaults write /tmp/system.preferences.plist shared -bool false
     sudo /usr/bin/security authorizationdb write system.preferences < /tmp/system.preferences.plist
     rm /tmp/system.preferences.plist
 
-    # 5.11 Disable ability to login to another user's active and locked session (Scored)
+    # 5.16 Disable ability to login to another user's active and locked session (Scored)
     /usr/bin/sed -i.bak s/admin,//g /etc/pam.d/screensaver
 
 
-    #5.12 Create a custom message for the Login Screen (Scored)
+    #5.17 Create a custom message for the Login Screen (Scored)
     # clear it out first
     sudo defaults delete /Library/Preferences/com.apple.loginwindow LoginwindowText
     sudo defaults write /Library/Preferences/com.apple.loginwindow LoginwindowText "SECURITY NOTICE: This is a US Government system for authorized use only. Users have no explicit or implicit expectation of privacy. All use of this system may be intercepted, monitored, recorded, inspected, and disclosed to authorized Government officials. Unauthorized or improper use may result in disciplinary action, civil, and criminal penalties. By continuing to use this system you indicate your consent to these terms and conditions of use. LOG OFF IMMEDIATELY if you do not agree to these conditions."
 
-    # 5.13 Create a Login window banner (Scored)
+    # 5.18 Create a Login window banner (Scored)
     sudo cp PolicyBanner.rtf /Library/Security/PolicyBanner.rtf
 
-    # 5.14 Ensure system is set to hibernate (Scored)
-    sudo pmset -a standbydelay 900
+
 
     # 5.18 System Integrity Protection status (Scored) - MANUAL
     # Remediation:
@@ -436,10 +438,10 @@ cd "$parent_path"
     # yes | to automatically respond yes when prompted
 
     # 6.2 Turn on filename extensions (Scored) -- account level
-    #defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+    defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 
     # 6.3 Disable the automatic run of safe files in Safari (Scored) -- account level
-    #sudo defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
+    defaults write com.apple.Safari AutoOpenSafeDownloads -boolean no
 
 #echo "Craig's CIS Benchmark Settings for $COMPANY_NAME successfully applied. Run Craig's osx_10.12_audit.sh to audit."
 exit 0
