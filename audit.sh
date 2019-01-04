@@ -1855,14 +1855,14 @@ echo '<div class="item">'
 echo '<h2>5.14 Ensure system is set to hibernate (Scored)</h2>'
 
 echo '<h4>Expected Result</h4>'
-echo '<p class="result">standbydelayhigh 900</p>'
+echo '<p class="result"> standbydelayhigh     900</p>'
 
 echo '<h4>Actual Result</h4>'
 RESULT=$(pmset -g | egrep standbydelayhigh)
 echo "<p class=\"result\">$RESULT &nbsp;</p>"
 
 echo '<h4>Findings</h4>'
-if [[ "$RESULT" =~ "standbydelayhigh 900" ]];
+if [[ "$RESULT" =~ " standbydelayhigh     900" ]];
 then
     echo '<p class="result compliant">Compliant</p>'
 else
