@@ -227,7 +227,7 @@ echo "Beginning security configuration."
 
 # The current user will need to log off and on for changes to take effect.
 #sudo defaults write com.apple.screensaver askForPassword -int 1  -- This is obsolete as of 10.13
-#following line should not be elevated.  It will write to system level preferences.
+#following line should not be elevated.  It will write to User level preferences.
 defaults write com.apple.screensaver askForPassword -bool TRUE
 #This setting is per user,and not per device. Needs to be moved to user script
 		

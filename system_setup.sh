@@ -388,7 +388,7 @@ cd "$parent_path"
     rm /tmp/system.preferences.plist
 
     # 5.16 Disable ability to login to another user's active and locked session (Scored)
-    /usr/bin/sed -i.bak s/admin,//g /etc/pam.d/screensaver
+    sudo /usr/bin/sed -i.bak s/admin,//g /etc/pam.d/screensaver
 
 
     #5.17 Create a custom message for the Login Screen (Scored)
@@ -441,7 +441,7 @@ cd "$parent_path"
     defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 
     # 6.3 Disable the automatic run of safe files in Safari (Scored) -- account level
-    defaults write com.apple.Safari AutoOpenSafeDownloads -boolean no
+    defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
 
 #echo "Craig's CIS Benchmark Settings for $COMPANY_NAME successfully applied. Run Craig's osx_10.12_audit.sh to audit."
 exit 0
