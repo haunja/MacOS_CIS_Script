@@ -88,10 +88,10 @@ cd "$parent_path"
 
 # 2 System Preferences
 
-     # 2.1 Bluetooth
+     # 2.1 Bluetooth   This section removed with approval of cyber 2/12/2019
          # 2.1.1 Turn off Bluetooth, if no paired devices exist (Scored)
-        sudo defaults write /Library/Preferences/com.apple.Bluetooth \ ControllerPowerState -int 0
-        sudo killall -HUP blued
+        # sudo defaults write /Library/Preferences/com.apple.Bluetooth \ ControllerPowerState -int 0
+        # sudo killall -HUP blued
 
         # 2.1.3 Show Bluetooth status in menu bar (Scored)
         #defaults write com.apple.systemuiserver menuExtras -array-add "/System/Library/CoreServices/Menu Extras/Bluetooth.menu"

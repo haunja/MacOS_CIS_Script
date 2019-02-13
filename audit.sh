@@ -250,123 +250,123 @@ else
 fi
 
 echo '</div>'
-# -------------------------------------
-echo '<div class="item">'
-
-echo '<h2>2.1.1 Turn off Bluetooth, if no paired devices exist (Scored)</h2>'
-
-echo '<h3>Bluetooth Status</h3>'
-echo '<h4>Expected Result</h4>'
-echo '<p class="result">Off</p>'
-
-echo '<h4>Actual Result</h4>'
-#Detects power state of Bluetooth adapter
-BluetoothPowerState=$(system_profiler SPBluetoothDataType | grep "Bluetooth Power" | grep -Eoi "(on|off)")
-echo "<p class=\"result\">$BluetoothPowerState &nbsp;</p>"
-
-echo '<h3>Paired Devices</h3>'
-echo '<h4>Expected Result</h4>'
-if [[ "$BluetoothPowerState" =~ "Off" ]];
-then
-    echo '<p class="result">No</p>'
-    echo '<span><strong>or</strong></span>'
-    echo '<p class="result">&nbsp;</p>'
-else
-    echo '<p class="result">Yes</p>'
-fi
-
-echo '<h4>Actual Result</h4>'
-BTDevicesConnected=$(system_profiler SPBluetoothDataType | grep 'Connectable:' | grep -Eoi "(yes|no)")
-echo "<p class=\"result\">$BTDevicesConnected &nbsp;</p>"
-# If the Bluetooth controller is powered off at the time the device is booted and the script is run without powering on Bluetooth, "Connectable" will return no matches from grep.
-# But if it's powered on and then off again, "Connectable" will return a result.
-
-echo '<h4>Findings</h4>'
-#if [[ "$BlueToothState" =~ "1" ]] && [[ "$BTDevicesConnected" =~ "Connectable: Yes" ]];
-#then
-    #echo '<p class="result compliant">Compliant</p>'
-if [[ "$BluetoothPowerState" =~ "Off" ]] && ([[ "$BTDevicesConnected" =~ "No" ]] || [[ "$BTDevicesConnected" == "" ]]);
-then
-    echo '<p class="result compliant">Compliant</p>'
-elif [[ "$ControllerPowerState" =~ "On" ]] && [[ "$BTDevicesConnected" =~ "Yes" ]];
-then
-    echo '<p class="tag">Provisionally Compliant</p>'
-
-    echo '<h5>Remediation</h5>'
-    echo '<p>Bluetooth is allowed to be enabled if Bluetooth devices are actively used and paired with the device, otherwise it should be disabled. By default, OS X lists a Bluetooth keyboard and mouse in the list of paired devices, regardless of whether these are actual devices owned and utilized by the user. Please ensure than any paired devices listed in the <strong>Devices</strong> list of the Bluetooth preferences menu are necessary and <strong>remove them</strong> if they are not. If the user has no Bluetooth devices, simply turn off Bluetooth.</p>'
-else
-    echo '<p class="result non-compliant">Non-Compliant</p>'
-
-    echo '<h5>Remediation</h5>'
-    echo '<p>It appears as if Bluetooth is enabled, but no devices are paired with the computer. Please disable Bluetooth.</p>'
-#    echo '<br />'
-#    echo '<p>In Terminal, run the following commands:<br />'
-#    echo '<code>sudo defaults write /Library/Preferences/com.apple.Bluetooth \ ControllerPowerState -int 0</code><br/>'
-#    echo '<code>sudo killall -HUP blued</code><br/>'
-#    echo '...<strong>Or simply turn off Bluetooth from the menu...</strong></p>'
-fi
-
-echo '</div>'
-# -------------------------------------
-echo '<div class="item">'
-
-echo '<h2>2.1.3 Show Bluetooth status in menu bar (Scored)</h2>'
-
-echo '<h4>Expected Result</h4>'
-echo '<p class="result">"/System/Library/CoreServices/Menu Extras/Bluetooth.menu"</p>'
-
-echo '<h4>Actual Result</h4>'
-RESULT=$(/usr/bin/defaults read com.apple.systemuiserver menuExtras | grep Bluetooth.menu)
-echo "<p class=\"result\">$RESULT &nbsp;</p>"
-
-echo '<h4>Findings</h4>'
-if [[ "$RESULT" =~ [[:punct:]]'/System/Library/CoreServices/Menu Extras/Bluetooth.menu'[[:punct:]] ]];
-then
-    echo '<p class="result compliant">Compliant</p>'
-else
-    echo '<p class="result non-compliant">Non-Compliant</p>'
-
-    echo '<h5>Remediation</h5>'
-    echo '<p>'
-    echo 'In Terminal, run the following command:'
-    echo '<code>defaults write com.apple.systemuiserver menuExtras -array-add "/System/Library/CoreServices/Menu Extras/Bluetooth.menu"</code>'
-    echo '</p>'
-fi
-
-echo '</div>'
-# -------------------------------------
-echo '<div class="item">'
-
-echo '<h2>2.2.1 Enable "Set time and date automatically" (Not Scored)</h2>'
-
-echo '<h4>Expected Result</h4>'
-echo '<p class="result">Network Time: On</p>'
-
-echo '<h4>Actual Result</h4>'
-RESULT=$(sudo systemsetup -getusingnetworktime)
-echo "<p class=\"result\">$RESULT &nbsp;</p>"
-
-echo '<h4>Findings</h4>'
-if [[ "$RESULT" =~ "Network Time: On" ]];
-then
-    echo '<p class="result compliant">Compliant</p>'
-else
-    echo '<p class="result non-compliant">Non-Compliant</p>'
-
-    echo '<h5>Remediation</h5>'
-    echo '<p>In Terminal, run the following command:<br />'
-    #echo '<code>sudo systemsetup -setnetworktimeserver tic.orau.org</code></p>
-    # Note - commented out above as it does not set multiple time servers which are needed for users
-    # that move on and off the internal network (laptops)
-    echo '<code>sudo time_setup.sh</code></p>'
-    #echo '<p>Multiple time servers can be enter in the GUI as a space or comma delimited list. Doing so populates the file: <code>/etc/ntp.conf</code>. To set multiple servers use my <code>set-ntp.sh</code> script.'
-    echo '<p>You can run Craig&apos; time_setup.sh to setup multime time servers. '
-    echo 'You may need to set permissons on the time_setup.sh to allow execution from terminal.'
-    echo 'If so, open terminal and navigate to the directory containing time_setup.sh and run the following command:<br>'
-    echo '<code>chmod 755 time_setup.sh</code></p>'
-fi
-
-echo '</div>'
+# ------------------------------------- This section removed with agreement of cyber 2/12/2019
+# echo '<div class="item">'
+#
+# echo '<h2>2.1.1 Turn off Bluetooth, if no paired devices exist (Scored)</h2>'
+#
+# echo '<h3>Bluetooth Status</h3>'
+# echo '<h4>Expected Result</h4>'
+# echo '<p class="result">Off</p>'
+#
+# echo '<h4>Actual Result</h4>'
+# #Detects power state of Bluetooth adapter
+# BluetoothPowerState=$(system_profiler SPBluetoothDataType | grep "Bluetooth Power" | grep -Eoi "(on|off)")
+# echo "<p class=\"result\">$BluetoothPowerState &nbsp;</p>"
+#
+# echo '<h3>Paired Devices</h3>'
+# echo '<h4>Expected Result</h4>'
+# if [[ "$BluetoothPowerState" =~ "Off" ]];
+# then
+#     echo '<p class="result">No</p>'
+#     echo '<span><strong>or</strong></span>'
+#     echo '<p class="result">&nbsp;</p>'
+# else
+#     echo '<p class="result">Yes</p>'
+# fi
+#
+# echo '<h4>Actual Result</h4>'
+# BTDevicesConnected=$(system_profiler SPBluetoothDataType | grep 'Connectable:' | grep -Eoi "(yes|no)")
+# echo "<p class=\"result\">$BTDevicesConnected &nbsp;</p>"
+# # If the Bluetooth controller is powered off at the time the device is booted and the script is run without powering on Bluetooth, "Connectable" will return no matches from grep.
+# # But if it's powered on and then off again, "Connectable" will return a result.
+#
+# echo '<h4>Findings</h4>'
+# #if [[ "$BlueToothState" =~ "1" ]] && [[ "$BTDevicesConnected" =~ "Connectable: Yes" ]];
+# #then
+#     #echo '<p class="result compliant">Compliant</p>'
+# if [[ "$BluetoothPowerState" =~ "Off" ]] && ([[ "$BTDevicesConnected" =~ "No" ]] || [[ "$BTDevicesConnected" == "" ]]);
+# then
+#     echo '<p class="result compliant">Compliant</p>'
+# elif [[ "$ControllerPowerState" =~ "On" ]] && [[ "$BTDevicesConnected" =~ "Yes" ]];
+# then
+#     echo '<p class="tag">Provisionally Compliant</p>'
+#
+#     echo '<h5>Remediation</h5>'
+#     echo '<p>Bluetooth is allowed to be enabled if Bluetooth devices are actively used and paired with the device, otherwise it should be disabled. By default, OS X lists a Bluetooth keyboard and mouse in the list of paired devices, regardless of whether these are actual devices owned and utilized by the user. Please ensure than any paired devices listed in the <strong>Devices</strong> list of the Bluetooth preferences menu are necessary and <strong>remove them</strong> if they are not. If the user has no Bluetooth devices, simply turn off Bluetooth.</p>'
+# else
+#     echo '<p class="result non-compliant">Non-Compliant</p>'
+#
+#     echo '<h5>Remediation</h5>'
+#     echo '<p>It appears as if Bluetooth is enabled, but no devices are paired with the computer. Please disable Bluetooth.</p>'
+# #    echo '<br />'
+# #    echo '<p>In Terminal, run the following commands:<br />'
+# #    echo '<code>sudo defaults write /Library/Preferences/com.apple.Bluetooth \ ControllerPowerState -int 0</code><br/>'
+# #    echo '<code>sudo killall -HUP blued</code><br/>'
+# #    echo '...<strong>Or simply turn off Bluetooth from the menu...</strong></p>'
+# fi
+#
+# echo '</div>'
+# # -------------------------------------
+# echo '<div class="item">'
+#
+# echo '<h2>2.1.3 Show Bluetooth status in menu bar (Scored)</h2>'
+#
+# echo '<h4>Expected Result</h4>'
+# echo '<p class="result">"/System/Library/CoreServices/Menu Extras/Bluetooth.menu"</p>'
+#
+# echo '<h4>Actual Result</h4>'
+# RESULT=$(/usr/bin/defaults read com.apple.systemuiserver menuExtras | grep Bluetooth.menu)
+# echo "<p class=\"result\">$RESULT &nbsp;</p>"
+#
+# echo '<h4>Findings</h4>'
+# if [[ "$RESULT" =~ [[:punct:]]'/System/Library/CoreServices/Menu Extras/Bluetooth.menu'[[:punct:]] ]];
+# then
+#     echo '<p class="result compliant">Compliant</p>'
+# else
+#     echo '<p class="result non-compliant">Non-Compliant</p>'
+#
+#     echo '<h5>Remediation</h5>'
+#     echo '<p>'
+#     echo 'In Terminal, run the following command:'
+#     echo '<code>defaults write com.apple.systemuiserver menuExtras -array-add "/System/Library/CoreServices/Menu Extras/Bluetooth.menu"</code>'
+#     echo '</p>'
+# fi
+#
+# echo '</div>'
+# # -------------------------------------
+# echo '<div class="item">'
+#
+# echo '<h2>2.2.1 Enable "Set time and date automatically" (Not Scored)</h2>'
+#
+# echo '<h4>Expected Result</h4>'
+# echo '<p class="result">Network Time: On</p>'
+#
+# echo '<h4>Actual Result</h4>'
+# RESULT=$(sudo systemsetup -getusingnetworktime)
+# echo "<p class=\"result\">$RESULT &nbsp;</p>"
+#
+# echo '<h4>Findings</h4>'
+# if [[ "$RESULT" =~ "Network Time: On" ]];
+# then
+#     echo '<p class="result compliant">Compliant</p>'
+# else
+#     echo '<p class="result non-compliant">Non-Compliant</p>'
+#
+#     echo '<h5>Remediation</h5>'
+#     echo '<p>In Terminal, run the following command:<br />'
+#     #echo '<code>sudo systemsetup -setnetworktimeserver tic.orau.org</code></p>
+#     # Note - commented out above as it does not set multiple time servers which are needed for users
+#     # that move on and off the internal network (laptops)
+#     echo '<code>sudo time_setup.sh</code></p>'
+#     #echo '<p>Multiple time servers can be enter in the GUI as a space or comma delimited list. Doing so populates the file: <code>/etc/ntp.conf</code>. To set multiple servers use my <code>set-ntp.sh</code> script.'
+#     echo '<p>You can run Craig&apos; time_setup.sh to setup multime time servers. '
+#     echo 'You may need to set permissons on the time_setup.sh to allow execution from terminal.'
+#     echo 'If so, open terminal and navigate to the directory containing time_setup.sh and run the following command:<br>'
+#     echo '<code>chmod 755 time_setup.sh</code></p>'
+# fi
+#
+# echo '</div>'
 # -------------------------------------
 echo '<div class="item">'
 
