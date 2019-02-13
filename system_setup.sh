@@ -116,7 +116,6 @@ cd "$parent_path"
         # Craig is putting this back in because it is the proper way to set up multiple time servers - Craig
 
         # 2.2.2 Ensure time set is within appropriate limits (Scored)
-        #As of 10.14, the ntpdate command has been removed. 
         #sudo ntpdate -sv tic.orau.org
 
         # 2.2.3 Restrict NTP server to loopback interface (Scored) - MANUAL

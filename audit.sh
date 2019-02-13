@@ -379,7 +379,7 @@ echo '<p class="result">Offsets: Between -270.x and 270.x seconds</p>'
 
 echo '<h4>Actual Result</h4>'
 NTS=$(sudo systemsetup -getnetworktimeserver)
-RESULT=$(sudo ntpdate -svd $NTS | egrep offset)
+#RESULT=$(sudo ntpdate -svd $NTS | egrep offset)
 echo "<p class=\"result pre\">$RESULT &nbsp;</p>"
 
 echo '<h5>Remediation</h5>'
@@ -1917,8 +1917,7 @@ RESULT=$(grep -i 'group=admin,wheel fail_safe' /etc/pam.d/screensaver)
 echo "<p class=\"result\">$RESULT &nbsp;</p>"
 
 echo '<h4>Findings</h4>'
-if [[ "$RESULT" == "" ]];
-then
+if [[ "$RESULT" == "" ]];then
     echo '<p class="result compliant">Compliant</p>'
 else
     echo '<p class="result non-compliant">Non-Compliant</p>'
